@@ -1,0 +1,14 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container > form {
+  display: grid;
+  width: 890px;
+  gap: 10px;
+}
+.section {
+  display: grid;
+}

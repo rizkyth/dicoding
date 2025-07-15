@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TodoApps</title>
+    <link rel="stylesheet" href="styless.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h3>TodoApps</h3>
+    </div>
+    <div class="container">
+      <form id="form">
+        <label for="name">Nama tugas : </label>
+        <input type="text" id="name" placeholder="Masukkan nama tugas" required />
+
+        <label for="descripsi">Deskripsi Tugas : </label>
+        <input type="text" name="descripsi" id="descripsi" placeholder="Membuat aplikasi " required />
+
+        <label for="date">Tanggal : </label>
+        <input type="date" id="date" required />
+
+        <input type="submit" name="submit" id="submit" value="Tambah Tugas" />
+      </form>
+    </div>
+    <section class="container section" id="task">
+      <h3>Daftar Tugas</h3>
+      <ul id="task-list" class="task-list">
+        <!-- Daftar tugas akan ditampilkan di sini -->
+      </ul>
+    </section>
+    <script src="main.js"></script>
+  </body>
+</html>
