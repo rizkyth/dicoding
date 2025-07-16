@@ -1,0 +1,60 @@
+.container {
+  width: 100%;
+  height: 100%;
+  margin-inline: auto;
+  place-items: center;
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: start;
+}
+header {
+  width: 100%;
+  background-color: cadetblue;
+  place-items: center;
+  height: 120px;
+}
+.text-header {
+  width: 100%;
+  margin: auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+#bookForm {
+  display: grid;
+  gap: 10px;
+  place-items: start;
+  background-color: cadetblue;
+  color: white;
+  padding: 10px;
+}
+#bookForm > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+input {
+  border: none;
+  padding: 8px;
+  border-radius: 12px;
+}
+button {
+  height: max-content;
+  padding: 8px;
+  width: max-content;
+  font: inherit;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+section {
+  background-color: cadetblue;
+  padding: 10px;
+  margin-top: 10px;
+  color: white;
+}

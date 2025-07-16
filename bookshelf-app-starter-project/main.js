@@ -3,7 +3,6 @@
 const books = [];
 const RENDER_EVENT = "render_book";
 const STORAGE_KEY = "book_storage";
-const SAVED_EVENT = "BOOKSHELF_APP";
 
 document.addEventListener(RENDER_EVENT, function () {
   const isCompletedBook = document.getElementById("completeBookList");
@@ -14,7 +13,7 @@ document.addEventListener(RENDER_EVENT, function () {
 
   for (const data of books) {
     const newBook = displayBook(data);
-    if (data.bookIsComplete) {
+    if (data.isComplete) {
       isCompletedBook.append(newBook);
     } else {
       unCompletedBook.append(newBook);
@@ -26,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
   formBtn.addEventListener("submit", function (e) {
     e.preventDefault();
     addBook();
+    console.log(books);
   });
   if (isStorageExist()) {
     loadDataFromStorage();
@@ -39,7 +39,8 @@ function addBook() {
   const bookIsComplete = document.getElementById("bookFormIsComplete");
   const bookId = generateId();
 
-  const newBook = createNewBook(bookId, bookTitle, bookAuthor, bookYears, bookIsComplete.checked);
+  const year = Number(bookYears);
+  const newBook = createNewBook(bookId, bookTitle, bookAuthor, year, bookIsComplete.checked);
   books.push(newBook);
 
   console.log(books);
@@ -47,13 +48,13 @@ function addBook() {
   saveData();
 }
 
-function createNewBook(id, title, author, years, bookIsComplete) {
+function createNewBook(id, title, author, year, isComplete) {
   return {
     id,
     title,
     author,
-    years,
-    bookIsComplete,
+    year,
+    isComplete,
   };
 }
 
@@ -76,12 +77,12 @@ function displayBook(book) {
 
   const bookYears = document.createElement("p");
   bookYears.setAttribute("data-testid", "bookItemYear");
-  bookYears.innerText = `Tahun : ${book.years}`;
+  bookYears.innerText = `Tahun : ${book.year}`;
 
   const containerBtn = document.createElement("div");
 
   const buttonChecker = document.createElement("button");
-  buttonChecker.innerText = !book.bookIsComplete ? "selesai Dibaca" : "Belum Dibaca";
+  buttonChecker.innerText = !book.isComplete ? "selesai Dibaca" : "Belum Dibaca";
   buttonChecker.setAttribute("data-testid", "bookItemIsCompleteButton");
 
   const buttonRemove = document.createElement("button");
@@ -100,12 +101,12 @@ function displayBook(book) {
   });
 
   buttonChecker.addEventListener("click", function () {
-    if (book.bookIsComplete) {
-      book.bookIsComplete = false;
+    if (book.isComplete) {
+      book.isComplete = false;
       document.dispatchEvent(new Event(RENDER_EVENT));
       saveData();
     } else {
-      book.bookIsComplete = true;
+      book.isComplete = true;
       document.dispatchEvent(new Event(RENDER_EVENT));
       saveData();
     }
@@ -166,8 +167,8 @@ function editBook(book) {
 
   document.getElementById("bookFormTitle").value = book.title;
   document.getElementById("bookFormAuthor").value = book.author;
-  document.getElementById("bookFormYear").value = book.years;
-  document.getElementById("bookFormIsComplete").checked = book.bookIsComplete;
+  document.getElementById("bookFormYear").value = book.year;
+  document.getElementById("bookFormIsComplete").checked = book.isComplete;
 
   const buttonSubmit = document.getElementById("bookFormSubmit");
   buttonSubmit.innerText = "Simpan Perubahan";
@@ -178,13 +179,13 @@ function editBook(book) {
   clonedForm.addEventListener("submit", function (e) {
     const updateTitle = document.getElementById("bookFormTitle").value;
     const updateAuthor = document.getElementById("bookFormAuthor").value;
-    const updateYear = document.getElementById("bookFormYear").value;
+    const updateYear = Number(document.getElementById("bookFormYear").value);
     const updateIsComplete = document.getElementById("bookFormIsComplete").checked;
 
     book.title = updateTitle;
     book.author = updateAuthor;
-    book.years = updateYear;
-    book.bookIsComplete = updateIsComplete;
+    book.year = updateYear;
+    book.isComplete = updateIsComplete;
 
     clonedForm.reset();
     clonedForm.innerText = "Tambah Buku";
@@ -198,7 +199,6 @@ function saveData() {
   if (isStorageExist()) {
     const parsed = JSON.stringify(books);
     localStorage.setItem(STORAGE_KEY, parsed);
-    document.dispatchEvent(new Event(SAVED_EVENT));
   }
 }
 
